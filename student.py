@@ -98,7 +98,7 @@ class Student:
             for row in records:
                 self.std_Table.insert('', END, values=row)
 
-    def validation(self):
+    def validation(self, status):
         if len(self.txt_RegNo.get())==0:
             self.txt_RegNo.focus
             messagebox.showerror("Validation Error", "You Muster Enter a Register Number")
@@ -122,18 +122,30 @@ class Student:
             self.txt_Email.focus
             messagebox.showerror("Validation Error", "Please Enter a Valida Email-Id")
             return 0
+        self.cursor.execute("SELECT * FROM students where RegNo=?", ((self.txt_RegNo.get()).upper(),))
+        value=len(self.cursor.fetchall())
+        print(status)
+        if value > 0 and str(status)=="insert":
+            messagebox.showerror("Integrity Error", "A student profile already exist with the given Register Number:"+self.txt_RegNo.get()+". Please try a new Register Number ")
+
+            return 0
+        if value<0 and str(status)=="update":
+            messagebox.showerror("Integrity Error", "Student Profile Is Not Exist With The Given Register Number:"+self.txt_RegNo.get())
+            return 0
         return 1
 
     def insert(self):
-        if self.validation()==1:
-            self.cursor.execute("INSERT INTO students VALUES(?,?,?,?,?)", (self.txt_RegNo.get(), self.txt_Name.get(), self.txt_Course.get(), self.txt_gender.get(), self.txt_Email.get()))
+        if self.validation("insert")==1:
+            self.cursor.execute("INSERT INTO students VALUES(?,?,?,?,?)", ((self.txt_RegNo.get()).upper(), self.txt_Name.get(), self.txt_Course.get(), self.txt_gender.get(), self.txt_Email.get()))
             self.con.commit()
             self.display()
+            self.clear()
 
     def update(self):
-        if self.validation()==1:
+        if self.validation("update")==1:
             self.cursor.execute("UPDATE students set Name=?, Course=?, Gender=?, Email=? ", (self.txt_Name.get(), self.txt_Course.get(), self.txt_gender.get(), self.txt_Email.get()))
             self.con.commit()
+            self.clear()
             self.display()
 
     def delete(self):
