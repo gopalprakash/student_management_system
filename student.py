@@ -4,6 +4,7 @@ from tkinter import messagebox
 import sqlite3
 import re
 
+
 class Student:
     def __init__(self, master):
         self.txt_gender = StringVar()
@@ -26,40 +27,39 @@ class Student:
         self.std_Manage_Frame = Frame(self.master, bd=2, relief=RIDGE)
         self.std_Manage_Frame.place(x=20, y=50, width=300, height=500)
 
-        self.lbl_RegNo = Label(self.std_Manage_Frame, text="REGISTER NO", font=("Helvetica", 10))
+        self.lbl_RegNo = Label(self.std_Manage_Frame, text="REGISTER NO", font=("Helvetica", 10), fg="grey1")
         self.lbl_RegNo.grid(row=1, column=0, padx=10, pady=10)
         self.txt_RegNo = Entry(self.std_Manage_Frame, textvariable=self.regNO, bd=2, width=25)
         self.txt_RegNo.grid(row=1, column=2)
-
-        self.lbl_Name = Label(self.std_Manage_Frame, text="NAME", font=("Helvetica", 10))
+        self.lbl_Name = Label(self.std_Manage_Frame, text="NAME", font=("Helvetica",10), fg="grey1")
         self.lbl_Name.grid(row=2, column=0, padx=10, pady=10, sticky="w")
         self.txt_Name = Entry(self.std_Manage_Frame, textvariable=self.Name, bd=2, width=25)
         self.txt_Name.grid(row=2, column=2)
 
-        self.lbl_Course = Label(self.std_Manage_Frame, text="COURSE", font=("Helvetica", 10))
+        self.lbl_Course = Label(self.std_Manage_Frame, text="COURSE", font=("Helvetica", 10), fg="grey1")
         self.lbl_Course.grid(row=3, column=0, padx=10, pady=10, sticky="w")
         self.txt_Course = ttk.Combobox(self.std_Manage_Frame, width=22, values=["BCA", "BBA", "BCA", "B-COM", "MBA", "MCA"])
         self.txt_Course.grid(row=3, column=2)
 
-        self.lbl_Gender = Label(self.std_Manage_Frame, text="GENDER", font=("Helvetica", 10))
+        self.lbl_Gender = Label(self.std_Manage_Frame, text="GENDER", font=("Helvetica", 10), fg="grey1")
         self.lbl_Gender.grid(row=4, column=0, padx=10, pady=10, sticky="w")
-        self.radio_male = Radiobutton(self.std_Manage_Frame, text="Male", variable=self.txt_gender, value="Male", tristatevalue="x")
+        self.radio_male = Radiobutton(self.std_Manage_Frame, text="Male", variable=self.txt_gender, value="Male", fg="grey1", tristatevalue="x")
         self.radio_male.place(x=110, y=130)
-        self.radio_female = Radiobutton(self.std_Manage_Frame, text="Female", variable=self.txt_gender, value="Female", tristatevalue="x")
+        self.radio_female = Radiobutton(self.std_Manage_Frame, text="Female", variable=self.txt_gender, value="Female", fg="grey1", tristatevalue="x")
         self. radio_female.place(x=180, y=130)
 
-        self.lbl_Email = Label(self.std_Manage_Frame, text="E-MAIL", font=("Helvetica", 10))
+        self.lbl_Email = Label(self.std_Manage_Frame, text="E-MAIL", font=("Helvetica", 10), fg="grey1")
         self.lbl_Email.grid(row=5, column=0, padx=10, pady=10, sticky="w")
         self.txt_Email = Entry(self.std_Manage_Frame, textvariable=self.Email, bd=2, width=25)
         self.txt_Email.grid(row=5, column=2)
         # --------Form Control buttons-------------
-        self.btn_Add = Button(self.std_Manage_Frame, text="ADD", width=15, command=self.insert,  font=("Helvetica", 10, "bold"), background = 'white')
+        self.btn_Add = Button(self.std_Manage_Frame, text="ADD", width=15, command=self.insert,  font=("Helvetica", 10, "bold"), fg="grey1", background = 'white')
         self.btn_Add.place(x=22, y=260)
-        self.btn_Update = Button(self.std_Manage_Frame, text="UPDATE", width=15, command=self.update, font=("Helvetica", 10, "bold"), background = 'white')
+        self.btn_Update = Button(self.std_Manage_Frame, text="UPDATE", width=15, command=self.update, font=("Helvetica", 10, "bold"), fg="grey1", background = 'white')
         self.btn_Update.place(x=160, y=260)
-        self.btn_Delete = Button(self.std_Manage_Frame, text="DELETE", width=15, command=self.delete, font=("Helvetica", 10, "bold"), background = 'white')
+        self.btn_Delete = Button(self.std_Manage_Frame, text="DELETE", width=15, command=self.delete, font=("Helvetica", 10, "bold"), fg="grey1", background = 'white')
         self.btn_Delete.place(x=22, y=295)
-        self.btn_Clear = Button(self.std_Manage_Frame, text="CLEAR", width=15, command=self.clear, font=("Helvetica", 10, "bold"), background = 'white')
+        self.btn_Clear = Button(self.std_Manage_Frame, text="CLEAR", width=15, command=self.clear, font=("Helvetica", 10, "bold"), fg="grey1", background = 'white')
         self.btn_Clear.place(x=160, y=295)
         # ---------Details Frame-------------
         self.std_Details_Frame = Frame(window, bd=2, relief=RIDGE)
