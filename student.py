@@ -143,18 +143,18 @@ class Student:
                                  +" operation")
             return 0
 
-        if re.findall(r'[0-9]', self.txt_Name.get()):
-            self.txt_Name.focus
+        if re.findall(r'[0-9]', self.txt_Name.get()) and str(status)=="insert":
+            self.txt_Name.focus()
             messagebox.showerror("Validation Error", "Please enter a valid Name")
             return 0
-        if re.findall(r'[0-9]', self.txt_Course.get()):
+        if re.findall(r'[0-9]', self.txt_Course.get()) and str(status)=="insert":
             self.txt_Course.set("")
-            self.txt_Course.focus
+            self.txt_Course.focus()
             messagebox.showerror("Validation Error", "Please select a valid Course")
             return 0
         # Validation the email address
-        if self.emailvalid.match(self.txt_Email.get()) is None:
-            self.txt_Email.focus
+        if self.emailvalid.match(self.txt_Email.get()) is None and  str(status)=="insert":
+            self.txt_Email.focus()
             messagebox.showerror("Validation Error", "Please Enter a Valida Email-Id")
             return 0
 
@@ -163,19 +163,19 @@ class Student:
         # Avoiding the Register Number duplication in DataBase
         if count_value > 0 and str(status)=="insert":
             messagebox.showerror("Integrity Error", "A student profile already exist with the given Register Number:"+self.txt_RegNo.get()+". Please try a new Register Number ")
-            self.txt_RegNo.focus
+            self.txt_RegNo.focus()
             return 0
         # Ensuring that a student profile is exist in the DataBase before performing the update and delete operations
         if count_value==0 and (str(status)=="update" or str(status)=="delete"):
             messagebox.showerror("Integrity Error", "No Student profile is exist with the given Register Number:"+self.txt_RegNo.get())
-            self.txt_RegNo.focus
+            self.txt_RegNo.focus()
             return 0
         # Code for avoiding the Email duplication
         self.cursor.execute("SELECT * FROM students WHERE RegNo!=? and Email=?",((self.txt_RegNo.get()).upper(),self.txt_Email.get()))
         count_value=len(self.cursor.fetchall())
         if count_value>0 and (str(status)=="update" or str(status)=="insert"):
             messagebox.showerror("Integrity Error", "A student profile is already exist with the given Email id:" + self.txt_Email.get())
-            self.txt_Email.focus
+            self.txt_Email.focus()
             return 0
         return 1
 
@@ -204,18 +204,22 @@ class Student:
     # function for performing validation and execution for delete operation
     def delete(self):
         if self.validation("delete")==1:
-            query="DELETE FROM students WHERE RegNo=?"
-            values=((self.txt_RegNo.get()).upper(),)
-            self.execute_function(query, values, "deleted")
+            msgbox=messagebox.askquestion("Confirmation", "Are you sure you want to delete this profile:"+self.txt_RegNo.get(), icon='warning')
+            if msgbox=='yes':
+                query = "DELETE FROM students WHERE RegNo=?"
+                values = ((self.txt_RegNo.get()).upper(),)
+                self.execute_function(query, values, "deleted")
 
     # function for clearing the values in the all input form widgets
     def clear(self):
+        self.txt_RegNo.config(state='normal')
         self.txt_Course.set("")
         self.txt_gender.set("")
         self.txt_RegNo.delete(0, END)
         self.txt_Name.delete(0, END)
         self.txt_Email.delete(0, END)
         self.std_Table.selection_remove(self.std_Table.focus())
+        self.std_Table.selection_clear()
 
     # function for assigning the selected row in the student list to input form
     def get_data(self, ev):
@@ -227,6 +231,7 @@ class Student:
         self.txt_Course.set(data[2])
         self.txt_gender.set(data[3])
         self.Email.set(data[4])
+        self.txt_RegNo.config(state='disabled')
 
 
 window = Tk()
