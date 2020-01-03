@@ -24,7 +24,7 @@
    
   This application is build with the following features.
   
-###Add new student profile 
+### Add new student profile 
   This feature enable the user to add new user profile. The user requested to give the Register number,Name,Course,Gender and Email address of the student.
      
 ### List student profiles
@@ -35,5 +35,10 @@
   
 ### Delete student profile
   This feature enable the user to delete the existing profile.
+
+## Testing environment  
+  This application is developed and tested on 
   
+    OS: Windows 10
+    Python: Python 3
   
